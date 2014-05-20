@@ -47,3 +47,5 @@ Always check status of repository with git status.
 	ls -la: shows information like. will show hidden files.
 
 	git add . : adds all files
+
+  

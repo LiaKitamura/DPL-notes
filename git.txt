@@ -1,1 +1,49 @@
 git information
+
+Git:
+
+Version Control:
+	Ex: Git
+
+Terminal:
+
+Always check status of repository with git status.
+
+	SHORTCUTS:
+
+	cntrl L - clear screen shortcut
+
+	atom . - shortcut to open atom from terminal
+
+	Atom COLORS:
+
+	Orange: in the repository and modified
+	Green: not in the repository
+	Grey:
+
+	DEFINITIONS:
+
+	. : in git files starting with a . (dot) is an ignore file
+
+	pwd: Print Working Directory - checks to see what terminal I am in
+
+	ls: List - lists stuff out. directories
+
+	cd: change directory.
+
+	mkdir: makes a new directory (folder).
+    mkdir (name).
+
+	touch: makes a new file.
+    touch (filename).
+
+	> : puts something in a file.
+    EX: echo “hello devpoint”  > filename
+    puts hello devpoint in whatever file you chose
+
+	rm: removes files.
+    EX: rm filename
+
+	ls -la: shows information like. will show hidden files.
+
+	git add . : adds all files

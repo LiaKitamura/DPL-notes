@@ -48,4 +48,8 @@ Always check status of repository with git status.
 
 	git add . : adds all files
 
-  
+  git checkout -b new_branch_name -- create the new branch and checkouts
+
+  git checkout master
+
+  git checkout   

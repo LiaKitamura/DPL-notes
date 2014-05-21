@@ -1,55 +1,8 @@
+Ruby -
 
-git steps:
+Variable rules
 
-new folder/file:
-
-	make sure to be in the folder you want to make a file.
-	mk dir will make a directory
-	cd into the directory
-	make new file atom filename or touch filename
-	git init
-	git add
-(make sure to save file in atom or will not add file)
-	git commit -m “ “
-	then make repo in github
-	git remote add origin ……….
-	git push
-
-cloning:
-
-always make sure to be in the folder you want to do stuff in.
-
-	pick a folder you want to clone into. cd into it. git clone http://………….
-	open file with atom filename
-	make changes, then save file changes
-	git add
-	git commit
-	git push
-
-go in the folder you created file go into it and open file with atom filename
-
-	git pull
-
-changes from someone else will be pulled into your file.
-
-
-Branching:
-
-go in folder with file you want to branch from
-
-	create a new branch and name it with git checkout -b filename
-		this will put you onto the new branch
-
-	create new file with atom filename
-		this will open up atom with new file
-
-	make your changes and save
-
-	git add
-	git commit
-since we are working on a branch we do git push -u origin branchname
-then to merge with the master branch
-
-	switch back over to master with git checkout master
-	git merge branchname
-	git push origin master
+	#1. all names should be lowercase
+	#2. begins with a letter
+	#3. separate words with an _ (underscore)
+	#4.

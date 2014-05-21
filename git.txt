@@ -52,4 +52,6 @@ Always check status of repository with git status.
 
   git checkout master
 
-  git checkout   
+  git checkout
+
+ changes 

@@ -1,8 +1,169 @@
 Ruby -
 
-Variable rules
+Numbers & String : Ruby’s math and text objects
+Methods : Methods like .reverse and symbolic methods like * are method actions
+DataTypes : Time, :symbol, Date, Array, Strings, Fixnum, float,
 
-	#1. all names should be lowercase
-	#2. begins with a letter
-	#3. separate words with an _ (underscore)
-	#4.
+to_s : converts things to strings
+to_i : converts things to integers (numbers)
+to_a : converts things to arrays
+:simple word - when you put a simple word in front of a colon you get a symbol. symbols are cheaper then strings
+nil : means there is nothing there.
+
+\ : escape character. or use single quotes inside double quotes.
+	EX : ‘ don \’ t do this’
+easier to just use double quotes then you can use a single quote inside without issues
+	EX : “don’t do this”
+
+#{ } : string interpolation. use variable instead of concatenation. (preference though) any valid ruby code can go inside.
+	EX : “1 + 1 =  #{1+1}”
+
+prints out “1 + 1 =  2”
+
+name = “Lia”
+	EX : “Hello, “ + name + “ . How are you?”
+	EX : “Hello, #{name}. How are you?”   <—- string interpolate
+
+IMPORTANT : But using string interpolation you must use double quotes. single quotes will print out \#{name}
+
+\n : new line character. manually putting something on the next line.
+	EX : “Hello\nLia”
+will print out :
+	Hello
+	Lia
+
+IMPORTANT : this also must be used with double quotes not single. single quotes will print out “Hello\nLia”
+
+[ ] : empty array.
+[“Jeremy”, “Will”, “Ty”] : this is considered a string array. each string is an index
+
+you can even assign this array to a variable.
+	EX : people = [“Jeremy”, “Will”, “Ty”]
+
+puts storage[0] <— this prints out index 0
+	=>Jeremy
+
+IMPORTANT : array indexes always start with a 0. this is called 0 based indexing
+
+.count : counts how many elements are in something.
+	Ex : people
+
+prints out 3
+
+.length, .count, and .size are all the same
+
+< < : shovel operator. this puts things into an array
+	EX : people << “Soldier”
+
+now soldier will be put at the end of the storage array
+	EX : people = [“Jeremy”, “Will”, “Ty”, “Soldier”]
+
+you can combine more << to add multiple items
+	EX : people << “Soldier” << “Lia” << “and so on”
+
+
+.each : is an array method
+
+people.each do |person|    <—person can be named any variable name
+	puts person                but is a local variable. cannot be used outside of this block
+end
+
+this will print out each person in the people array
+
+block : a block starts with a do and end with end
+
+multidimensional array : is an array inside of an array
+	EX : things = [ [1,2.3], [4,5,6],  [ 9, 8,7] ]
+
+to get something from the multidimensional array :
+	puts things[0][1]
+
+this will print out 2
+
+
+Variables -
+
+variable rules:
+
+#1. all names should be lowercase
+#2. begins with a letter
+#3. separate words with an _ (underscore)
+
+In Ruby anything can be assigned to a variable
+EX : people = [“Jeremy”, “Will”, “Ty”]
+
+
+Ruby has four types of variables:
+
+local_variable = “hello” : can_be_anything = “hello”
+
+@instance_variable = “Lia” : @
+
+@@class_variable = “Human” : @@
+
+$global_variable = “DO NOT USE” : $
+
+Scope : local variables are only available locally. cannot got out of the local scope
+	EX : [ [ [ [ [local] instance] class] ] global]
+
+
+{ } : a hash also used for a collection of things. can use double or single quotes.
+	EX : storage = {“Box 1” => “Stuff”, “Box 2” => “More Stuff”}
+
+and like an array can have a hash inside a hash.
+	EX : storage = {“Box 1” => “Stuff”, “Box 2” => “More Stuff”, “Box 3 => [“box”, “of”, “stuff” ] }
+
+puts storage[“Box 1”]
+	>”Stuff”
+
+IMPORTANT : does not use 0 based index. its is a key based index. Uses Keys and Values.
+
+IMPORTANT : in a hash you must reference the key exactly how its been written. keys can be anything. but each key also has to be unique. keys are case sensitive
+
+storage.each_pair do | key, value |
+	puts “The key is #{key} and the value is #{value}”
+end
+
+	>The key is Box 1 and the value is Stuff
+	>The key is Box 2 and the value is More Stuff
+	>The key is Box 3 and the value is [box, of, stuff]
+
+ :name : a data type of symbol, just like array, string are data types… used where you might use a string. used mostly in hashes. a symbol might be used for the key instead. convention in a symbol is all lowercase.
+
+	EX : me = {:name => “Lia”, :age => 26}
+		puts me[:name]
+		>”Lia”
+
+to set a value and add to the hash you cannot use << like in an array. must manually set.
+	EX : me[:sex] = “female”
+
+IMPORTANT : can’t have  -  (dashes) in variables  and hashes
+
+
+
+When to use a Hash vs Array
+
+Array : use an array when you have a generic collection of things you want to do something to everything.
+	EX : dog = [1, “happy”, 8, “no”, “lab”]
+
+Hash :  when you want each object in your collection to have a specific name
+	EX : dog = [
+		   {:breed => ‘lab’, :name => ‘happy’, :command => ’no’},
+		   {:breed => ‘mutt’, :name => ’sad’, :command => ’yes’}
+		]
+
+
+Time data type :
+
+somethings you can do :
+
+	Time.now
+	Time.now.year
+	Time.now.hour
+	Time.now.min
+
+current_year = Time.now.year
+
+	puts current_year
+
+>2014

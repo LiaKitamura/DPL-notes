@@ -1,4 +1,4 @@
-Git:
+Git and terminal:
 
 Version Control:
 	Git
@@ -51,16 +51,17 @@ git steps:
 new folder/file:
 
 	make sure to be in the folder you want to make a file.
-	mk dir will make a directory
+	mk dir will make a directory —— (if you want a new folder to add a new file too)
 	cd into the directory
-	make new file atom filename or touch filename
-	git init
-	git add
-(make sure to save file in atom or will not add file)
-	git commit -m “ “
-	then make repo in github
-	git remote add origin ……….
-	git push
+	make new file with atom filename or touch filename
+	git init —— (only for first time)
+	git add filename
+(make sure to save file changes in atom or will not add file)
+	git commit -m “ message“
+	then make repo in github —— (if first time making directory)
+	git remote add origin …. —— (if first time making directory)
+	git push -u origin master —— (if first time making directory)
+		otherwise just use git push
 
 cloning:
 
@@ -71,6 +72,7 @@ always make sure to be in the folder you want to do stuff in.
 	make changes, then save file changes
 	git add
 	git commit
+if working on some else’s repo need to be added as collaborator and get permission
 	git push
 
 go in the folder you created file go into it and open file with atom filename
@@ -100,3 +102,5 @@ then to merge with the master branch
 	switch back over to master with git checkout master
 	git merge branchname
 	git push origin master
+
+notes folder ruby.txt push to github

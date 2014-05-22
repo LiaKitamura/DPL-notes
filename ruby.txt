@@ -34,6 +34,10 @@ will print out :
 
 IMPORTANT : this also must be used with double quotes not single. single quotes will print out “Hello\nLia”
 
+   - Array -
+
+http://apidock.com/ruby/Array
+
 [ ] : empty array.
 [“Jeremy”, “Will”, “Ty”] : this is considered a string array. each string is an index
 
@@ -106,6 +110,10 @@ $global_variable = “DO NOT USE” : $
 Scope : local variables are only available locally. cannot got out of the local scope
 	EX : [ [ [ [ [local] instance] class] ] global]
 
+
+  - Hash -
+
+http://apidock.com/ruby/Hash
 
 { } : a hash also used for a collection of things. can use double or single quotes.
 	EX : storage = {“Box 1” => “Stuff”, “Box 2” => “More Stuff”}

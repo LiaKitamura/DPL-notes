@@ -1,6 +1,6 @@
 #  Conditonals :
 
-this conditional if looking just for yes or no
+#this conditional is looking just for yes or no
 
 if bacon_is_cooked
 	serve_bacon
@@ -278,15 +278,20 @@ class Human
 
 =begin
   if you use attr_accessor you do not need to use a reader or writer method
-  # Reader Method
+  # Reader instance Method
   def skin_color
     @skin_color
   end
 
-  #  Writer Method
+  #  Writer instance Method
   def skin_color=(new_skin_color)  # <--local variable scope
     @skin_color = new_skin_color # <-- by assigning it a instance variable it is available in the
  end                                                      # scope of the instance of the class. in this case Human
+
+ # instance method. this method with a ? will always return true or false
+ def old_enough?
+
+ end
 =end
  end
 #  assigning a new color to the class of Human and instance of baby
@@ -314,3 +319,62 @@ class Computer < Internet
 
   end
 end
+
+#all of these are INSTANCE methods
+class Human
+
+  def die!
+  end
+
+  def name=(new_name)
+  end
+
+  def old_enough_to_vote?
+  end
+end
+
+
+
+# CLASS METHODS
+
+class Human
+
+  #this is a class method
+  #self is ruby key word to reference ones self or current object you are in. which is Human
+  def self.evolve
+  end
+
+  #this is the same as the above code. but usually referenced the above way
+  def Human.evolve
+  end
+end
+
+
+
+# we are in the class human
+
+class Human
+  attr_accessor :sex
+
+  # in the class Human we are creating an instance of Human,  boy
+  def self.create_boy
+    # since i'm inside of the class method i can use the class method of new
+    baby = new
+    baby.sex = "male"
+    baby # this has to be the last thing evaluated
+  end
+
+  def self.create_girl
+    baby = new
+    baby.sex = "female"
+    baby # this has to be the last thing evaluated
+  end
+
+end
+
+#this will only create instance of Human, a boy in the baby variable
+baby = Human.create_boy
+
+#class methods are called on the class itself
+
+#you can put anything inside a method

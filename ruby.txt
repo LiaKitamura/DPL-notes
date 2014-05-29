@@ -175,3 +175,126 @@ current_year = Time.now.year
 	puts current_year
 
 >2014
+
+
+! = is destructive. will change the original object
+
+EX : wow = "WOW"
+prints "WOW"
+
+but use ! and it will change
+
+EX : wow.downcase!
+prints "wow"
+
+and if you print the variable wow it will have changed into wow = "wow"
+
+
+
+TERNARY OPERATOR :
+
+x = 4
+y= 5
+
+simpler way of doing an if else statement
+
+if x is less that y its prints "YEAH!" else it prints "nope"
+
+x < y ? "YEAH!" : "nope"
+=>"YEAH!"
+
+result = x < y ? "YEAH!" : "nope"
+
+result
+=> "YEAH!"
+
+
+DATE METHOD :
+
+needs to link up with a file.
+require 'date'
+
+NAMING CONVENTION :
+
+in a module each module name is uppercase. when saving file seperate each word with _
+
+
+
+I/O : means input output.
+	reading a file then writing a file.
+Input : gets
+Output : puts
+
+
+
+Dir.pwd : using terminal this command will do the same as pwd outside of terminal.
+	this shows the file directory path
+
+Dir.glob("*.rb") : gathers up all the files in this dir we are using a * to represent a placeholder that
+	means any files ending in rb. and will have a list of files in an array
+
+system("ls") : lists, "pwd"
+
+` these are called backticks
+`` tells ruby to run a system command
+
+name = "Lia"
+`say -v "Good News" "Hello #{name}"`
+
+File.exists?(" filename") : whether or not a file actually exists in current directory I am in
+		also you can use exists? with Dir
+Dir.exists?(" foldername")
+
+Dir.chdir("")
+
+File.basename("car.rb")
+=> "car.rb"
+
+"#{Dir.pwd}/car.rb"
+=> returns the file path
+
+File.extname("logo.jpg")
+=> ".jpg"
+
+File.join("Users, "Lia", "Desktop"): build directory structure.if you don't know where to put / and stuff
+=>"Users/Lia/Desktop"
+
+
+creating a new file :
+	when creating a new file you need to specify the mode
+
+"r" : read-onlu
+"r+" : file has to be already existing. and has text
+"w" : write-only. deletes existing file and
+"w+" : if file does not exist we will create new one and open it. if file has stuff in it and you open it
+	it will delete everything
+"a" : write-only. starts at end of file if exists.
+"b" : binary file mode
+
+
+
+new_file = File.new("first_file.txt, "modehere")   <--creates new file
+new_file.write("hello")     <-writes to file
+=> 5    <-- this fixnum means total numbers of files for the line
+
+IMPORTANT:
+once you open the file you have to close it when you are done. there are issues if you don't do this
+
+new_file.close
+
+filename.eof? : means end of file
+=> true or false
+
+new line character \n has to use double quotes " \n"
+
+filename.rewind : will start back at the top then you can use filename.readline
+
+new_file.readline unless new_file.eof? : helps to prevent errors
+
+
+GEMS :
+
+a gem is whats known as a library. a library is a prepackaged code that somelse wrote for you
+	and you can you can use it in your program
+
+Rails is a gem.

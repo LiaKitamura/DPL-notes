@@ -191,6 +191,8 @@ class CrazyAnimal
 end
 
 
+#INHERITANCE :
+
 class Parent
 end
 
@@ -337,6 +339,15 @@ end
 
 # CLASS METHODS
 
+# the reason to have classes : you can start grouping things with like actions.
+=begin
+	take facebook for example. you make a class of user and all the input for email and password
+	and by giving it a name to call it we can just call the user class instead of finding individual
+	things
+	A container with a label on it.
+	class is the label and def methods or anything related to that label are in that container
+=end
+
 class Human
 
   #this is a class method
@@ -378,3 +389,51 @@ baby = Human.create_boy
 #class methods are called on the class itself
 
 #you can put anything inside a method
+
+
+
+
+# DATE METHOD :
+
+#needs to link up with a file. doesn't need to have .rb at the end
+require 'date'
+
+#other types of require
+require 'open-uri'
+require 'net/http'
+
+=begin
+REQUIRE :
+	taking whats built into ruby and adding them
+	the reason they aren't added as default is that the more of these libraries are there the slower
+	the application runs. so you only load what you need.
+
+	ruby has a thing called load path it is an array of strings and each one of these strings is a
+  path to where all the files are located
+
+	each class has a specific task you give it. each instance of that class
+	when you have multiple requires you need to call them according to the order.
+	if you have a dependancy on the third file and load it and call it first before requiring the first two
+	it will not work. must load first two then you can use the third file.
+=end
+
+
+#this is an array that specifies where ruby files are located. if you do this you need to say where
+#exactly the file is located
+$LOAD_PATH
+
+
+
+
+# MODULES & MIXINS
+
+#MODULES :
+
+#similar to class, module is also a constant and starts with a capital letter
+module Transportation
+
+	def going_forward
+		puts "moving forward"
+	end
+
+end

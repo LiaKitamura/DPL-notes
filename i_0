@@ -7,11 +7,13 @@ Output : puts
 
 
 
-Dir.pwd : using terminal this command will do the same as pwd outside of terminal.
-  this shows the file directory path
+Dir.pwd : using terminal this command will do the same as pwd outside of
+  terminal.
+this shows the file directory path
 
-Dir.glob("*.rb") : gathers up all the files in this dir we are using a * to represent a placeholder that
-  means any files ending in rb. and will have a list of files in an array
+Dir.glob("*.rb") : gathers up all the files in this dir. we are using a * to
+represent a placeholder that means find any files ending in .rb.
+this will find file results in an array
 
 system("ls") : lists, "pwd"
 
@@ -20,9 +22,11 @@ system("ls") : lists, "pwd"
 
 name = "Lia"
 `say -v "Good News" "Hello #{name}"`
+this can be input into terminal and it will talk back to you
 
-File.exists?(" filename") : whether or not a file actually exists in current directory I am in
-    also you can use exists? with Dir
+File.exists?(" filename") : checks to see whether or not a file actually exists
+  in current directory I am in
+  also you can use exists? with Dir
 Dir.exists?(" foldername")
 
 Dir.chdir("")
@@ -36,7 +40,8 @@ File.basename("car.rb")
 File.extname("logo.jpg")
 => ".jpg"
 
-File.join("Users, "Lia", "Desktop"): build directory structure.if you don't know where to put / and stuff
+File.join("Users, "Lia", "Desktop"): build directory structure.if you don't
+  know where to put / and stuff
 =>"Users/Lia/Desktop"
 
 
@@ -57,8 +62,10 @@ new_file = File.new("first_file.txt, "modehere")   <--creates new file
 new_file.write("hello")     <-writes to file
 => 5    <-- this fixnum means total numbers of files for the line
 
+
 IMPORTANT:
-once you open the file you have to close it when you are done. there are issues if you don't do this
+once you open the file you have to close it when you are done. there are issues
+  if you don't do this
 
 new_file.close
 
@@ -71,15 +78,15 @@ filename.rewind : will start back at the top then you can use filename.readline
 
 new_file.readline unless new_file.eof? : helps to prevent errors
 
-File.readlines("filename.txt") : array of strings that will be on a different line
-  now you can take this a put it into a variable
+File.readlines("filename.txt") : array of strings that will be on a different
+  line now you can take this ans put it into a variable
       EX : line = File.readlines("filename.txt")
 
 since its now an array you can do
 
-  lines.each do 
+  lines.each do
 
-end
+end  
 
 
 

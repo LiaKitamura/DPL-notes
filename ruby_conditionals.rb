@@ -1,4 +1,4 @@
-#  Conditonals :
+# Conditonals :
 
 #this conditional is looking just for yes or no
 
@@ -23,9 +23,36 @@ end
 puts "lets grab lunch" unless you_already_ate
 
 
+# ------- NESTED IF ---------
+
+class Player
+  def play_turn(warrior)
+
+  if @health == nil
+    @health = warrior.health
+  end
+
+  if warrior.feel.empty?
+  	if warrior.health < 20
+      if warrior.health < @health
+        warrior.walk!
+      else
+        warrior.rest!
+      end
+    else
+      warrior.walk!
+    end
+  else
+    warrior.attack!
+  end
+  @health = warrior.health
+  end
+end
 
 
-# CASE :
+
+
+# ------ CASE : --------
 
 grade = 'A'
 
@@ -56,7 +83,7 @@ end
 
 
 
-#    WHILE :
+# ---------- WHILE : -----------
 
 while nemesis_still_lost
 	puts 'keep swimming'
@@ -81,7 +108,7 @@ end
 
 
 
-#   METHODS :
+# ------------- METHODS : -------------
 
 #define a name.
 
@@ -118,7 +145,7 @@ meals = [
 	{food: 'pasta', drink: 'wine'}
 ]
 
-#    iterate over array -
+# ------- iterate over array ------------
 
 meals.each do | meal |
 	grab_food(meal[:food], meal[:drink])  # <——since key is inside hash us [] and is also a symbol use :food
@@ -161,7 +188,7 @@ end
 
 
 
-#    CLASS :
+# ---------- CLASS : -------------
 
 #  classes must start with a Capital letter for the beginning of each word.
 
@@ -191,7 +218,7 @@ class CrazyAnimal
 end
 
 
-#INHERITANCE :
+# --------- INHERITANCE : ------------
 
 class Parent
 end
@@ -337,7 +364,7 @@ end
 
 
 
-# CLASS METHODS
+# ------------ CLASS METHODS -------------
 
 # the reason to have classes : you can start grouping things with like actions.
 =begin
@@ -425,7 +452,7 @@ $LOAD_PATH
 
 
 
-# MODULES & MIXINS
+# ------- MODULES & MIXINS -----------
 
 #MODULES :
 
@@ -437,3 +464,118 @@ module Transportation
 	end
 
 end
+
+
+
+# -------- ARGUMENTS, BLOCKS, DSL, *SPLAT --------
+
+# two instance methods say and run
+# say defines an argument
+# run does not
+
+class Human
+	def say(stuff = 'stuff') # setting a default argument
+		puts "eating #{stuff}"
+	end
+
+	def run
+		puts 'running'
+	end
+end
+
+me = Human.new
+me.say('something')
+me.run('fast')
+
+
+
+class Router
+	def get(path, options = {}) # first value does not have default value and so
+		http = options[:protocol] #  is required. options is a optional argument
+	end
+
+end
+
+r = Router.new
+r.get('thing', {protocol: 'https'})
+
+
+ # ------ BLOCKS --------
+
+
+# blocks don't get a default value but is optional
+# yield goes with blocks. block is where running code will stop and run what you
+#   want then after the yield the code will continue running where it left off
+
+class Router
+	def get(path, options = {}, &block)  # comes at the end of an argument
+		http = options[:protocol]
+		puts 'before block'
+		yield                 # yield key word start running your code
+		puts 'after block'    # will start the original code back
+	end
+
+end
+
+# when we define blocks we use the yield key word to tell ruby do what is inside
+#   the block then continue the code
+r = Router.new
+r.get('thing', {protocol: 'https'}) do
+	puts 'inside block'
+end
+
+
+# anytime you see do and end that is a block
+[].each do |something| # this block takes an argument
+
+end
+
+# ------ *SPLAT --------
+
+# a splat *
+# in this case * means go ahead and pass as many arguments as you want
+# for each argument passed ruby turns it into an array
+class Router
+	def debug(*data)  # <----- here is the splat * put as many things as you want
+		data.each do |datum|
+			puts datum
+	end
+
+end
+
+# when we define blocks we use the yield key word to tell ruby do what is inside
+#   the block then continue the code
+r = Router.new
+r.debug('hello', 'people', 'yo', 12, 2)
+
+
+# -------- DSL ------------
+
+# once its written once you don't have to do it again just require dsl
+
+require 'dpl_cooking'
+
+# when cook is done serve eggs
+cook('eggs') do
+	# eggs are done cooking
+	puts 'serving eggs'
+end
+
+# if you see a pattern in code use a dsl
+# then you don't have to keep repeating yourself
+bacon = chef.cook('bacon', style: 'extra crispy')
+while bacon.still_cooking?
+	puts 'still cooking bacon'
+	break if bacon.cooked?
+end
+puts 'serving bacon'
+
+
+# doing DSL is much easier then doing all this and keep repeating that code:
+chef = Chef.new
+eggs = chef.cook('eggs')
+while eggs.still_cooking?
+	puts 'still cooking eggs'
+	break if eggs.cooked?
+end
+puts 'serving eggs'

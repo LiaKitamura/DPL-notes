@@ -275,7 +275,7 @@ creating a new file :
 
 new_file = File.new("first_file.txt, "modehere")   <--creates new file
 new_file.write("hello")     <-writes to file
-=> 5    <-- this fixnum means total numbers of files for the line
+=> 5    <-- this Fixnum means total numbers of files for the line
 
 IMPORTANT:
 once you open the file you have to close it when you are done. there are issues if you don't do this
@@ -294,7 +294,48 @@ new_file.readline unless new_file.eof? : helps to prevent errors
 
 GEMS :
 
-a gem is whats known as a library. a library is a prepackaged code that somelse wrote for you
-	and you can you can use it in your program
+a gem is whats known as a library. a library is a prepackaged code that
+	someone else wrote for you and you can you can use it in your program
 
 Rails is a gem.
+
+
+Gosu : 2d video game framework
+Shoes : cross platform desktop application builder
+Chef : multi server management and deployer
+Highline : Rubygem for terminal based applications
+Waves : 3D video game development in ruby
+Ruby as a utility
+
+
+DSL :
+
+Domain Specific Language
+ruby has the ability to create dsl really easy
+
+require 'dpl_cooking'
+
+# when cook is done serve eggs
+cook('eggs') do
+	# eggs are done cooking
+	puts 'serving eggs'
+end
+
+# doing this is much easier then doing this:
+
+chef = Chef.new
+eggs = chef.cook('eggs')
+while eggs.still_cooking?
+	puts 'still cooking eggs'
+	break if eggs.cooked?
+end
+puts 'serving eggs'
+
+
+cook('bacon', style: 'extra crispy') do
+	puts 'serving bacon'
+end
+
+cook('toast', style: 'light golden', add: 'butter') do
+	puts 'serving toast'
+end

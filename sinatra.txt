@@ -1,0 +1,34 @@
+sinatra_stuff(master)$ mkdir cats
+sinatra_stuff(master)$ cd cats/
+--open cat folder. make Gemfile, .ruby-gemset, .ruby-version files ---
+cats(master)$ atom .
+-- cd out of folder --
+cats(master)$ cd ..
+-- then cd back in so bundler can do its thing --
+sinatra_stuff(master)$ cd cats/
+ruby-2.1.2 - #gemset created /Users/ZaFox/.rvm/gems/ruby-2.1.2@cats
+ruby-2.1.2 - #generating cats wrappers...........
+-- this checks to see if it worked --
+cats(master)$ rvm current
+ruby-2.1.2@cats
+-- now bundle --
+cats(master)$ bundle
+
+in the file require sinatra
+make a views folder. this is where your index file will be
+
+LAYOUT :
+insert placeholder where content actually changes
+
+yield whatever page we're on and shove it into where this yield
+
+
+PUBLIC & PRIVATE
+
+if we don't want the code that runs the page to be shown to everyone we want it to be private
+sinatra already knows its private
+
+html & css is all public code.
+
+even though html is public everything in erb tags in the html file is private.
+sinatra does have a way to declare public  

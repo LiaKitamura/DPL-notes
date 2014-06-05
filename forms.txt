@@ -1,0 +1,44 @@
+--- FORMS ----
+
+the form tells the inputed text where to go and you can display it somewhere
+
+forms can't go in another form
+
+<form>
+  // information
+</form>
+
+when forms get sent browser gathers everything in the form and sends it together.
+
+
+--- ATTRIBUTES ---
+
+form tag requires some attributes:
+
+action = "": specifies url for where the data is being sent. this is the routed
+
+method = "" : method in which you want the data to be sent. GET or POST
+  GET : get back information from the server. search form like google.
+  POST : sending information to the server.
+
+
+
+--- ELEMENTS ---
+
+Elements that go inside a form tag:
+
+<input> : types - hidden - hides input.
+  text - line of text.
+    text : email, number, url....
+  password - enter something secret.
+  radio - has the circles you click. allows only one selection.
+  checkbox - has squares to check. allows multiple selection.
+  submit - will create button for you. details will be sent to specified location.
+  reset - gives you button.
+
+<select> : allows for the drop down menu for different options to select from
+
+
+
+<textarea> : for large block of text.
+<button>

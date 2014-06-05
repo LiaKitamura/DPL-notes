@@ -339,3 +339,30 @@ end
 cook('toast', style: 'light golden', add: 'butter') do
 	puts 'serving toast'
 end
+
+
+WEBSITES:
+
+A collection of files. Documents that the browser reads
+generally pretty static.
+
+RVM :
+
+Ruby Version Manager
+RVM
+
+manages versions of ruby
+
+by creating a .ruby-gemset file we can lock in the version of ruby being used
+so you don't get version conflicts when using gems. you don't have to worry
+about remembering when i'm in this project i need to use this ruby version and if i'm in this project i need to use another one.
+
+the first time you rvm you cd back one and then go back into folder created so rvm can create what it needs to
+
+PRY :
+
+gem 'pry'
+require 'pry'
+
+add binding.pry
+refresh your page and switch to terminal should be working

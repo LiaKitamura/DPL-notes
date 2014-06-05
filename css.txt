@@ -1,0 +1,29 @@
+UI : User Interface. you want the UI to be nice. the nice it is the longer someone will want to stay on the page
+
+UX : User Experience. The experience the user is having. a page might look really nice but is super difficult to use. that is a bad UX.
+
+
+css selector : a way for a browser to find a specific set of elements
+
+---- SELECTORS ----
+* - means everything
+
+# - id
+
+. - class
+
+input[type=text] - input tag that have type of text with value of text
+
+ul > li - find ul and find all children in the ul with li children
+
+a:focus, a:hover - sudo classes. a sudo class is a way to define a specific   action. comma is multiple tags
+
+div p.small - all p tags with class small inside of a div
+
+
+---- COLORS ----
+
+#333333 - Hex colors. 0-9 A-F
+RGB - R : first 2 num, G : next 2, B : last two
+#000000 - all black
+#ffffff - all white       

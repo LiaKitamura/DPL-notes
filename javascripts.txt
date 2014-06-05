@@ -1,0 +1,143 @@
+opalrb
+coffeescript
+
+javascript is not an object oriented language. it more of function oriented
+in javascript there aren't floats a number is a number
+
+"string" // string
+'string' // string
+123 // number
+12.4 // also a number
+{} - an object
+// - comments in javascript
+
+javascript does not have string interpolation you have to concatenate
+
+methods in javascript are called functions
+
+"1 plus 1".capitalize()  <--- a function. must use () when calling the function
+"lia".toUpperCase()  <---- multiple word functions use camelCasing
+
+"1".to_i in ruby
+but in javascript we do this:
+  parseInt("1", 10)  <--- function is parseInt "1" is argument we want changed. 10 is the base.
+
+  parseFloat("4.3", 10)
+
+
+var name = "Lia" in javascript we use var. tells javascript we are creating a local variable name and assigning it to "Lia".
+
+No such thing as classes like in Ruby. Doesn't really have instance variables.
+
+var name = "Lia" use var keyword or else it will be global and that might lead to issues
+
+Once major syntax thing when writing javascript code.
+at the end of every complete full statement needs to have a ; (semicolon)
+
+var name = "Lia"; <--- use semicolon
+
+
+var firstName = "Lia"
+var lastName = "Kitamura"
+
+var name = firstName + " " + lastName;
+"My name is " + name;
+
+
+not everything will return a value.
+properties of a datatype don't need parens.
+  EX : .length
+
+typeof - is like class in ruby.
+typeof 1
+> "number"
+
+
+
+adding object to an array
+var names = ["some", "name"]
+name[2] = "added"
+names.push("another");
+
+
+
+-------- OBJECTS --------
+
+{} - called an object in javascript
+defining key value pairs in js
+
+var dog = {name: 'fluffy', age: 3};
+
+to retrieve a key return as a string and brackets:
+dog['name']
+
+to assign a new value to hash :
+dog['breed'] = 'pitty';
+
+using dot notation to call key
+dog.breed
+
+--- control flow -----
+
+var age = 20;
+
+if (age >= 21) {
+  console.log("Yo! Lets hit up the club");
+} else {
+  console.log("Sorry, no club for you");
+}
+
+
+
+------ DOM -------
+
+Document Object Model
+
+Buttons and any functionality in html is actually through the DOM in javascript
+
+Node : tags in a script
+
+document : find specific elements in a page using document in console
+document.getElementById("taco");
+>tacoDiv
+
+tacoDiv.innerHTML
+> will output what is inside the tacoDiv
+
+tacoDiv.id
+> "taco"
+
+// will make tacoDiv red
+tacoDiv.style.color = "red";
+
+// if you are trying to style something and relate it to css use camelCasing
+tacoDiv.style.backgroundColor = "#ffaaaa"
+
+
+
+----- EVENT DRIVEN ------
+
+everything in js is event driven
+
+Time based events : every 1 second or whatever time do this..
+mouseOver something and have it do something. mousing over is the event
+click on a link and have it do something. the click is the event
+mouseDown and mouseUp are separate events
+scrolling the page, clicking on stuff, mousing over, all these things are events
+
+
+Window object refers to the browser itself
+has a function called on load this will be called regardless
+
+http verb that happens is GET
+can only do a POST through a form 
+
+
+------ FALSE ------
+
+4 things that return false in js
+
+false
+null : like nill in Ruby
+undefined : doesn't exist yet
+0

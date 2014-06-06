@@ -1,0 +1,228 @@
+----- RAILS -----
+
+Interwebz: How does it work?
+
+HTTP & DNS
+http verbs : get & post
+
+Hyper Text Transfer Protocol :
+
+a way to define a way to Transfer data through the web
+
+Domain Name System :
+
+some computers that run your domain name into some numbers and back again
+its like a giant hash.
+
+
+------ Domain Name ------
+
+Domain Name :
+http://www.yourwebsite.com
+
+http:// <---- this is the Protocol
+
+www <---- the subdomain
+
+yourwebsite <------ the actual domain name
+
+com <---- TLD : top level domain
+
+--- Website Breakdown ---
+
+Step 1 : Type in a website address (also called a URL)
+  EX: www.ruby-lang.org
+
+Step 2 : Browser makes http request to DNS server to find website. The DNS points to IP address. Then actually connects to that machine.
+  IP address : physical location for where a machine is at.
+
+Step 3 : Once its connected it does an http get.
+
+Step 4 : Shows your website you typed.
+
+
+--- HTML, CSS, JS ---
+
+HTTP : "stupid" web language. A Markup language is NOT a programming language.
+
+CSS : Cascading Style Sheets
+
+JavaScript : Not to be confused with Java. The programming language that makes webpagegs fancy.
+
+
+What is the machine doing?
+
+RDBMS : Relational Database Management System
+  short answer - a database. a place to put your data. but there are lots of types of databases
+
+RDBMS looks like a spreadsheet.
+
+HTML template we have been working with is erb.
+
+the Browser only understands HTML, CSS, and JS it does not understand erb. it has to talk to webserver.
+
+NGINX : a webserver program . theres a bunch of others
+
+webserver: a program that will send files from your website server to someones Browser.
+
+
+----- Wrap Up -------
+
+1. Type in URL
+2. Get IP address of site from DNS
+3. Conncet to webserver of website
+4. Website connects to DB
+5. Website gets files ready
+6. Webserver serves up website
+7. Your Browser downloads requested page
+
+
+    ------------------------------- RAILS ----------------------------
+
+Website:
+  static. Not smart. just provides information.
+
+Web application:
+  Dynamic. Does stuff. Think Gmail, Facebook, Amazon, etc....
+
+Rails :
+A full-stack Web application framework
+
+full-stack: from database to what people see on the site, and everything in between
+
+framework : a ton of code that is already written for you.
+
+Rails can talk to a database without having to do any work. also knows how to serve up JS and CSS properly.
+
+Rails is built in Ruby.
+Ruby is the program
+Rails is a framework
+
+----- why do startups use rails? -----
+
+1. Fast prototyping
+2. Quick deployment
+3. Easy iterations
+4. Less time saves money
+5. Open source is cheap
+
+-------- Other MVC frameworks ----------
+Rails is a MVC framework
+
+NodeJS : Express, Sails
+
+Python : Django(not unchained), Grok
+
+PHP : Cake, Code ignitor, Fuel, Symfony, Kohana
+
+Scala : Play, Lift
+
+MVC : Model View Controller
+name of how you organize your files.
+pretty much talking about organization. put things where they belong.
+
+Convention over Configuration
+
+
+    ------------------- Starting Rails ---------------------
+
+before you use rails you need to install it.
+gem install Rails
+
+rails -v
+//should show rails version if installed correctly
+
+rails new file_name
+
+//once its done loading
+cd into application
+
+open in atom with atom .
+
+// rails can generate lots. we will scaffold then name of what you are making
+// generally used for prototyping. you will never use it for actual application
+// string, text, datetime - type of .
+rails generate scaffold Contact name:string address:string phone:string email:string
+
+//rake is a gem. installed with ruby. allows you to make terminal based task. like a mini terminal app to run things for you
+in this case we want to db:migrate to connect to the database. this is what keeps the datbase up to date with rails.
+
+rake db:migrate
+
+// go into atom. cmd t find routes.rb
+add root '' under resources
+
+// serving up all the stuff that you see in browser
+// boot up server in terminal
+rails server
+
+
+
+
+    ------------------------ stuff in rails app -----------------------
+
+README : if someone needs to work with your app specific information about it.
+
+Rakefile : is what tells that rake application what rake tasks we have. can add custom rake tasks. usually doesn't change
+
+Gemfile : usually have to create ourselves but rails already does it.
+
+config.ru : rails is a rack application. all rack apps use this config.ru.
+rack apps are like legos. it can link whole programs together.
+
+.gitignore : sometimes you want to push stuff to github but you don't want to push passwords and such. you can put that passwords file in the gitignore
+
+vendor folder : used for 3rd party JavaScript and stylesheets. used in your app but built by someone else.
+
+tmp folder : you usually don't save anything important in here. temporay things your app might need but gets deleted later
+
+test folder : write tests to test your code. there are different types of tests.
+
+public folder : when we launch our application we don't want the public to see all the code. in rails by default everything is private. so things that you would see in the browser needs to go in here like passwords.
+
+some default files in the public folder
+
+    404 : missing
+    422 :
+    500: broken
+    favicon.ico : favorite icon
+    robots.txt : referencing web spider or web crawler. is a bot that has its own brain and know how to do something. used to allow or disallow web spider to block things for you.
+
+log file : this one is called our development log. logs stuff that happens on your page.
+  development environment : when your working on it.
+  production environment : up on the internet
+
+lib folder :
+  lib assets : folder is never really used.
+  lib tasks : rake db:migrate is a lib task. rake tasks are put in here. you can create your own rake tasks.
+
+db folder : database.
+  migrate : handles stuff related to the database. rake task looks inside this folder and runs it.
+  development.sqlite3 : ruby gem that is a wrapper to handle the sql Database and talk to it.
+  schema : you will never touch. blueprints of your database. how your database is constructed. good reference to see how things were named.
+  seeds.rb : meant for putting data that your application requires to start up.
+
+config folder : Configuration
+  environments : setup special configuration setting per environment you're in.
+    development.rb :
+    production.rb :
+  initializers : the second you run rails server it initializes. it runs through these initializers.
+  locales : by default rails understands how to make your website multilingual.
+    en.yml : whatever language you want your application to be in you create a yaml file for it like en.yml, jp.yml etc...
+
+  application.rb : main file. entry point.
+  boot.rb : you won't ever touch
+  database.yml : sets up our different database stuff.
+  enviroment.rb : initializes the application. you don't really touch this.
+  routes.rb : anytime you want to specify your route. GETS and POSTS
+  secrets.yml : this file you want to protect. you don't want people to access.
+
+bin folder : where you put programs you run in the rails app. like rails bundle, rails generate, rake etc....
+
+app folder : the most important folder. this is where you code that makes your app what it is.
+  assets folder: if you want to add stylesheets, images and stuff goes in here
+  controllers folder : where you create a controller
+  helpers : used for modules. namespace and mixins.
+  mailers : whenever you have an email that needs to be sent out.
+  models : real world objects that we are modeling after.
+  views : the actual page. what you see. erb, html files go in here.

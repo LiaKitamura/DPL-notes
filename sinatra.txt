@@ -1,34 +1,102 @@
-sinatra_stuff(master)$ mkdir cats
-sinatra_stuff(master)$ cd cats/
---open cat folder. make Gemfile, .ruby-gemset, .ruby-version files ---
-cats(master)$ atom .
--- cd out of folder --
-cats(master)$ cd ..
--- then cd back in so bundler can do its thing --
-sinatra_stuff(master)$ cd cats/
+------ using sinatra ------
+
+// make your directory
+1. sinatra_stuff(master)$ mkdir cats
+
+// cd into that directory
+2. sinatra_stuff(master)$ cd cats/
+
+// open newly made directory in text editor
+3, cats(master)$ atom .
+
+// add files to application directory
+  // Gemfile has source and gems being used
+4. Gemfile : source 'https://rubygems.org'
+  gem 'sinatra'
+
+// name of app in .ruby-gemset
+5 .ruby-gemset : cats
+
+// version of ruby to use
+6 .ruby-version : 2.1.2
+
+// save. go back into terminal
+
+// cd out of folder
+7. cats(master)$ cd ..
+
+// then cd back in so bundler can do its thing
+8. sinatra_stuff(master)$ cd cats/
+
+// which should show something like this
 ruby-2.1.2 - #gemset created /Users/ZaFox/.rvm/gems/ruby-2.1.2@cats
 ruby-2.1.2 - #generating cats wrappers...........
--- this checks to see if it worked --
-cats(master)$ rvm current
+
+// you can do this to see if it worked
+9. cats(master)$ rvm current
 ruby-2.1.2@cats
--- now bundle --
-cats(master)$ bundle
 
-in the file require sinatra
-make a views folder. this is where your index file will be
 
-LAYOUT :
-insert placeholder where content actually changes
+// now bundle
+10. cats(master)$ bundle
+
+// finished with setup
+
+// make your file that will run your app like site.app and require 'sinatra'
+11. in the file require sinatra
+
+// this page should look something like this:
+// this is where you would use get and post
+11. continued...
+
+  require 'sinatra'
+
+  get '/' do
+    erb :index
+  end
+
+// when linking erb files to sinatra, sinatra specifically looks for a folder called views. that is where you will save erb files.
+// now make a new folder called views. this is where your index will be
+12. views/
+
+// in views you can now make a layout file
+  // puts repetitive stuff in one place then insert yield for changing content
+13. layout.erb
 
 yield whatever page we're on and shove it into where this yield
 
+// application should now look something like this
+  // views directory inside cats directory. layout in views directory
+>cats
+  >views
+    layout.erb
+    index.erb
 
-PUBLIC & PRIVATE
+// in cats directory but not in any other directory's these files
+.ruby-gemset
+.ruby-version
+Gemfile
+Gemfile.lock --- which gets created automatically when Gemfile is made
+site.rb
+
+
+  ----------- Starting your Server ------------
+
+// you must be in application folder in terminal
+1. ruby site.rb
+
+// open browser
+2. localhost:4567
+
+// anytime changes are made restart sinatra server
+
+
+  ----- PUBLIC & PRIVATE -----
 
 if we don't want the code that runs the page to be shown to everyone we want it to be private
-sinatra already knows its private
+in sinatra everything is private. unless in a public folder
 
 html & css is all public code.
 
 even though html is public everything in erb tags in the html file is private.
-sinatra does have a way to declare public  
+sinatra does have a way to declare public

@@ -1,0 +1,261 @@
+--------- Data Storage ---------
+
+-- How do we store data? --
+
+Data Storage Mediums -
+  File system : when we write notes or code it gets saved here.
+    not bad but it can be slow especially if its large.
+
+  Memory : extremely fast when saving to Memory.
+    but if you reset the machine some stuff saved to memory could get lost
+
+  Database : program that store data. kind of in between file system and Memory. most stable way to store data.
+
+
+------ Database Types ------
+
+SQL (sequel): Structured Query Language
+NoSQL
+Graph
+
+
+  --- SQL ---
+SQL : a programing language
+
+Common SQL Databases
+ all use SQL but have there own way of doing certain things.
+  MySQL (my s q l) : been around awhile
+  PostgresSQL : fairly new
+  SQLite3 : smaller lighter database
+  SQLServer : specifically a microsoft product. and costs lots of money
+
+  --- NoSQL ---
+generally not relational. uses javascript for queries
+way faster then SQL db. optimized for reading data.
+
+Common NoSQL DB
+  CouchDB
+  MongoDB
+  RethinkDB
+
+  --- Graph DB ---
+not a SQL or NoSQL database. Kind of there own thing.
+made up of nodes and edges. a node is a circle and an edge is a line. edges connect to nodes and so on. used in things like facebook in you may know people section.
+
+Common Graph DB
+  Neo4J
+  Oracle Spatial
+  Titan
+
+
+    ------------------ Back to PostgresSQL ---------------------
+
+-- Features --
+HStore : basically a giant hash. lives in memory.
+GIS Geospatial : allows you to store geo points in your db. longitude latitude.
+Full-text search : searches text
+new columns : when you store your data it gets saved with datatypes. in PostgresSQL they have one for arrays.
+
+-- making rails app with PostgresSQL --
+
+config.rb
+database.yml in development under database put host: localhost
+
+// if its not SQLite create Database manually
+rake db:create
+// if it works should just go to the next line
+rails generate scaffold Animal name:string breed:string age:integer species:string
+
+rake db:migrate
+// should create a table
+
+// rails has its own irb type environment but runs rails
+rails console
+
+
+// instantiating a new Animal class
+cat = Animal.new
+=> #<Animal id: nil, name: nil, breed: nil, age: nil, species: nil, created_at: nil, updated_at: nil>
+
+// assigning values
+cat.name = "Meowzers"
+cat.breed = ""
+
+// right now the instance of cat is still living in memory. its not actually stored yet
+
+// will store to database
+cat.save
+
+// to access the data you could do
+a = Animal.first
+
+// call attributes by
+a.name
+a.breed
+
+
+
+    --------------------------- SQL ----------------------------
+
+it is a programming language but not really used as such.
+
+you have a rails app
+and you have a database
+they have to talk to each other. that is what db:migrate does and keeps db up to date
+// databases also have a console type thing.
+  // in terminal. make sure elephant symbol is running. \q exits console
+1. psql -d elephant_development
+
+  >elephant_development=#
+
+// to see what tables exist \d
+// name objects as singular version. rails takes name and generates a pluralized version.
+2. \d
+
+// to describe a table
+3. \d animals
+
+elephant_development=# \d animals
+                                     Table "public.animals"
+   Column   |            Type             |                      Modifiers
+------------+-----------------------------+------------------------------------------------------
+ id         | integer                     | not null default
+                                            nextval('animals_id_seq'::regclass)
+ name       | character varying(255)      |
+ breed      | character varying(255)      |
+ age        | integer                     |
+ species    | character varying(255)      |
+ created_at | timestamp without time zone |
+ updated_at | timestamp without time zone |
+Indexes:
+    "animals_pkey" PRIMARY KEY, btree (id)
+
+Modifiers column :
+  not null: makes it so something has to be there
+  default : if field is not null will automatically fill it in
+
+Type :
+  character varying(255): any unicode character allows ip to 255 characters
+
+Indexes :
+  speeds up doing querying for us when we are querying.
+
+// queries are case sensitive
+
+// to see all the data. select *(all) from (table_name); <-dont forget ;
+4. select * from animals;
+
+// what its really doing : select all columns from animals. by default sql returns columns that matches your query
+
+querying in sql only four commands you're really concerned bout
+  CRUD :
+    C - create
+    R - read
+    U - update
+    D - delete
+
+// returning all queries from animals that have id of 3
+5. select * from animals where id=3;
+// other options :
+     select * from animals where name='hooty';
+     select * from animals where name like 'Animal%';
+     select * from animals where name like '%Animal%';
+
+// we can transform the data and query on the transformed version
+  // lowercases and specify column name
+6. select * from animals where lower(name) like 'animal%';
+
+// count the number of rows that match our query.
+7. select count(*) from animals where lower(name) like 'animal%';
+
+// total number of records in this table
+8. select count(*) from animals;
+
+// specify columns
+9. select name from animals;
+   select age from animals;
+
+// range of age and returns just there names
+10. select name from animals where age >=2 and age <=5;
+// will return name and age column
+    select name,age from animals where age >=2 and age <=5;
+
+// finding queries with time
+11. select created_at from animals;
+
+// finding queries from a certin time frame
+12. select id, name from animals where extract(hour from created_at) < 20;
+
+// deleting a record.
+  // deleting from a specific table and specific id
+13. delete from animals where id=11;
+
+// updating query
+14. update animals set name='Billy Goat' where id=4;
+
+// updating multiple fields
+15. update animals set breed='mountain', age=3 where id=4;
+
+// inserting new record
+  // column name. values must be inserted in same order
+16. insert into animals(name, breed, age, species) values('Jeremy', 'Crazy Male', '32', 'Human');
+
+// updating that new record
+17. update animals set created_at=now(), updated_at=now() where id=11;
+
+// limiting queries
+18. select name, age from animals where lower(name) like 'jeremy%' limit 1;
+
+// limiting queries by colmuns and decending order
+19. select name, age from animals where lower(name) like 'jeremy%' order by age desc limit 1;
+
+// off setting
+20. elephant_development=# select name, age from animals where lower(name) like 'jeremy%' order by age desc limit 1 offset 1;
+
+
+-------- Creating a table ------------
+elephant_development=#
+
+// TABLE cars : pluralized.
+// varchar(20) : varying character limit of 20
+// not null : restriction. can't be empty
+
+1. CREATE TABLE cars (
+id bigserial primary key,
+make varchar(20) not null,
+model varchar(20) not null,
+year integer,
+created_at timestamp,
+updated_at timestamp,
+condition text
+);
+
+// adding a field
+2. ALTER TABLE cars ADD COLUMN for_sale BOOLEAN DEFAULT true;
+
+// deleting a whole table
+3. DROP TABLE cars;
+
+// return make, model of cars where year is less then 2005
+4. select make,model from cars where year < 2005;
+
+// returning average
+5. select avg(year) from cars;
+   select sum(year) from cars;
+
+
+      ------------ key types ------------
+
+2 main types of keys when it comes to tables
+
+primary : main key thats on the table. the unique identifier for each individual record.
+    usually make unique field a number so it can auto increment up.
+
+foreign : when you have another table and you reference the other tables key also. allows you to associate with another table that is related.
+
+
+    ----------- Joining tables --------------
+// made a customers table with car_id
+// car_id in customers table finds and links with id in cars table.
+
+1. SELECT make, model FROM cars INNER JOIN customers ON cars.id=customers.car_id;

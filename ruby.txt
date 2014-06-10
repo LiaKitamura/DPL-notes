@@ -366,3 +366,17 @@ require 'pry'
 
 add binding.pry
 refresh your page and switch to terminal should be working
+
+---- REPL ----
+
+REPL :Read Evaluate Print Loop
+	reads something being typed
+	evaluates whats being typed
+	prints out that value
+	loops back
+
+pretty much does a:
+	gets
+	evaluation
+	puts
+	inside a loop

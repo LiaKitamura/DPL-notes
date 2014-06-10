@@ -1,0 +1,5 @@
+------- sinatra -----
+
+why is site.rb a ruby file but the others are erb.
+
+working on setting up sinatra following notes

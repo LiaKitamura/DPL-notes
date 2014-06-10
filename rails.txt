@@ -124,6 +124,7 @@ pretty much talking about organization. put things where they belong.
 Convention over Configuration
 
 
+
     ------------------- Starting Rails ---------------------
 
 before you use rails you need to install it.
@@ -138,24 +139,57 @@ rails new file_name
 cd into application
 
 open in atom with atom .
+.ruby-gemset name of app
+.ruby-version 2.1.2 or whatever one
+cd out one
+cd back in
+bundle
 
 // rails can generate lots. we will scaffold then name of what you are making
 // generally used for prototyping. you will never use it for actual application
 // string, text, datetime - type of .
 rails generate scaffold Contact name:string address:string phone:string email:string
 
-//rake is a gem. installed with ruby. allows you to make terminal based task. like a mini terminal app to run things for you
-in this case we want to db:migrate to connect to the database. this is what keeps the datbase up to date with rails.
+//rake is a gem. installed with ruby. allows you to make terminal based task. //like a mini terminal app to run things for you
+//in this case we want to db:migrate to connect to the database. this is what //keeps the database up to date with rails.
 
 rake db:migrate
 
 // go into atom. cmd t find routes.rb
-add root '' under resources
+add root 'contacts#index' under resources
 
 // serving up all the stuff that you see in browser
 // boot up server in terminal
 rails server
 
+
+rake routes will show the routes
+
+rm -rf name_folder/   to delete folders
+
+
+
+  -------------- Controller -------------------
+
+// this creates views
+rails generate controller static_pages home about contact_us
+
+//if you did it wrong or don't like it
+rails destroy controller static_pages
+
+//get into development branch
+rails generate controller static_pages home about contact_usr
+
+routes.rb
+root ''
+
+//creating a nav partial underscore is important
+_nav.html
+<a href="/">Home</a>
+
+//layouts has application.html.erb
+//put this above the yield
+<%= render 'layouts/nav' %>
 
 
 

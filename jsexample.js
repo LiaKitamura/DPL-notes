@@ -3,6 +3,10 @@
 
 // functions are like ruby method
 
+// window - object that is like a variable of your screen
+// onload - works on the object and we want to asign it a new function
+// functions - we can create functions that don't have names. called annonymous function. doesn't get ran just defining it.
+
 // first we are defining a function and assinging it to a variable
 var windowLoaded = function() {
   // we need to find the form on the page using .forms[]

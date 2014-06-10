@@ -3,3 +3,12 @@
 why is site.rb a ruby file but the others are erb.
 
 working on setting up sinatra following notes
+
+------ rails -------
+
+working on controller
+
+
+------- sql ---------
+trying to delete specific field but ended up deleting whole row.
+couldn't get specific birthday date of april 19 1993

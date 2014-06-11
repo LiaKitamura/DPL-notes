@@ -8,6 +8,7 @@ working on setting up sinatra following notes
 
 working on controller
 
+rake db:create ? whats its purpose. what happens. what happens if you don't . 
 
 ------- sql ---------
 trying to delete specific field but ended up deleting whole row.

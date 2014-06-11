@@ -221,6 +221,11 @@ querying in sql only four commands you're really concerned bout
 // updating that new record
 17. update animals set created_at=now(), updated_at=now() where id=11;
 
+
+  ------------- LIKE ------------------
+
+The word LIKE permits pattern matching - % is the wildcard.
+
 // limiting queries
 18. select name, age from animals where lower(name) like 'jeremy%' limit 1;
 

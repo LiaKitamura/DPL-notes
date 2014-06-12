@@ -49,12 +49,27 @@
 // open
 4. atom .
 
+
+-------------------------------- SQL Types -------------------------------------
+:binary
+:boolean
+:date
+:datetime
+:decimal
+:float
+:integer
+:primary_key
+:string
+:text
+:time
+:timestamp
+
 // in db folder find migrate file and add :
 **// instead of typing column and varchar() you can do it like : //**
   --  t.string :name
   --  t.string :breed, limit: 100
 
-// modifiers set after the first ,
+// so to set columns and modifiers
 5.  t.string :name, null: false
     t.string :breed, limit: 100
     t.string :species
@@ -69,8 +84,11 @@
 
 // go into development to make sure model got all set up with \d
 9. psql -d sandbox_development
+  9.1 \d
 
-      ------------- Migration file to add columns ---------------
+
+
+    ------------- Migration file to add columns if necessary ---------------
 
 // adding a migration file
 10. rails g migration add_columns_to_animals
@@ -83,6 +101,8 @@
 // anytime you make changes you have to rake db:migrate
 12. rake db:migrate
 
+
+
     ------------ Migration file to remove/rename columns ---------------
 
 **// once you migrate can't make changes to that file. if you need to add or remove you just create another migration //**
@@ -93,6 +113,20 @@
     rename_column :animals, :born_on, :birthday
     add_column :animals, :trained, :boolean, default: false
 
+
+
+        --------------- Deleting/Rollbacks ----------------
+
+    **// rails destroy model name or rails destroy migrate name \\**
+
+// checks to see if its 'up' if it is, you can rollback. if it is 'down', already been rolled back use rake db:migrate:status
+    **// rake db:migrate:status //**
+
+// rolls back migration and deletes all data.
+    **// rake db:rollback //**
+
+
+
       ------------- Adding Values to your Attributes --------------
 
 // adding data to db. go find db/seeds.rb
@@ -102,6 +136,7 @@
 16. rake db:seed
 
 // now you can play with it in rails console
+
 
 
         ---------------- ActiveRecord::Relation ----------------
@@ -141,6 +176,7 @@
 8. Animal.where("birthday < ?", 1.year.ago).where(name: "Fluffy")
 
 
+
         ------------------------- SCOPE -------------------------
 
 // go to app/models/animal.rb
@@ -166,6 +202,7 @@
 
 // and also
 6. Animal.trained.cats
+
 
 
           ---------------- JOIN TABLES FAQ -----------------
@@ -198,6 +235,7 @@ it is called relational database because it can be related in some form
 
 4. rake db:migrate
 
+
           ---------- SETUP ASSOCIATION BETWEEN FILES ----------
 
 // to associate between models app/models/trainer.rb and animal.rb
@@ -221,7 +259,7 @@ it is called relational database because it can be related in some form
 
 
 
-    ---------------------- RAILS CONSOLE OVERVIEW ----------------------
+    ---------------------- RAILS OVERVIEW ----------------------
 
 0. rails new project -d postgresql
 0.1 cd new project
@@ -260,3 +298,257 @@ rails c > Student.last.destroy
 rails c > Student.find_by_id
 // .where will find all that match //
 rails c > Student.where(favorite_color: 'Purple')
+rails c > Animal.find_by_species('Dog')
+rails c > Animal.table_name
+
+
+// Error Messages //
+
+// in rails console
+
+begin
+  animal = Animal.find(50)
+    resuce ActiveRecord::RecordNotFound  <-- Whatever error you have goes here
+  puts "could not load animal"
+end
+
+
+********************************************************************************
+********************************************************************************
+
+------------------------------ CONTROLLERS -------------------------------------
+
+// Controllers are Ruby classes but not used like Ruby classes.
+
+1. Controllers job is to talk to the Model.
+2. Model talks to the DB. Model sends back info to Controller.
+3. Controller sends it to View
+
+  // Resource is based on Whatever your model is.
+
+
+                            Animal RESOURCE
+
+                    Animal        Animals          Animals
+                    Model <----- Controller <------ Views
+                      |   ------>           ------>
+                      |
+                      DB
+
+
+routes : the -----> is called the routes.
+
+/products : is pluralized so the route is saying all products
+
+/products/:id : refers to a specific params id in products
+
+
+
+--------------------------------------------------------------------------------
+
+// making your app
+1. rails new dpl_store -d postgresql
+2. cd dpl_store/
+
+// made git repo and made develop branch. so you have a clean master branch
+
+// generating model in develop branch
+3. (branch) > rails g model Product
+
+// open
+4. (branch) > atom .
+
+// in atom go to db/migrate/abunchofnumbers_create_products.rb add your column names like :
+  EX :
+    t.string :name, null: false
+    t.float :price, default: 0.0
+    t.string :sku
+    t.boolean :in_stock, default: true
+    t.text :description
+
+5. add columns
+   save
+
+// in config/database.yml
+6. host: localhost
+
+// back in terminal you can now
+7. rake db:create
+8. rake db:migrate
+
+// keep github up to date
+    git add config/database.yml
+    git commit -m 'updated dev db settings'
+    git add -A
+    git commit -m 'added a product model'
+    git push origin develop
+//
+
+// in db/seeds.rb add
+9. Product.create(stuff: 'stuff', )
+   save
+
+// back into develop branch
+10. rake db:seed
+
+// you can git add to keep git up to date
+git add db/seeds.rb
+git commit -m 'updated products'
+//
+
+// when naming controllers use the pluralized version
+11. rails generate controller products
+
+/*/ all methods in the controller are called 'actions'
+
+// config/routes.rb or cmd-t routes add resources
+/*/ this generates routes for us
+12. resources :products
+
+// in terminal to see the routes
+13. rake routes.
+
+/*/ you might see something like this :
+
+EX :
+
+
+Prefix Verb   URI Pattern                  Controller#Action
+    products GET    /products(.:format)          products#index
+             POST   /products(.:format)          products#create
+                                ^^ this is an optional parameter
+ new_product GET    /products/new(.:format)      products#new
+edit_product GET    /products/:id/edit(.:format) products#edit
+                              ^^ this is a required parameter
+                              EX : edit_product_path(1)
+                        // the EX will return the string '/products/1/edit'
+     product GET    /products/:id(.:format)      products#show
+             PATCH  /products/:id(.:format)      products#update
+             PUT    /products/:id(.:format)      products#update
+             DELETE /products/:id(.:format)      products#destroy
+
+
+all of these are all relative urls ^^^^^
+all related to products controller
+
+prefix column : its the prefix to an action. this action will return a string that is the pattern. each prefix has a _path and _uri
+  EX : products_path
+       products_uri
+
+verb column : http verbs. relates to something you are trying to do.
+  Get : have a new file in view for each Get. if you have 4 Gets you have 4 views file.
+  Post : create a new resource
+  Patch : taking resource and patching it
+  Put : updating an entire resource
+
+uri pattern column : inside pattern anything inside () is optional. if it is not optional you must supply that value.
+  the : references a variable for the pattern.
+  . just means a dot like in a url
+    EX :
+      products.html
+  the :format is a variable
+
+controller_action column : shows the actions you have
+
+
+/*/ its possible to have more then one index page. this is why you also add the html part
+  EX : index.html.erb
+       index.xml.erb
+       index.pdf.erb
+
+// start the rails server
+14. rails s
+
+// apps/views/products/
+// create index.html.erb
+15. add something like :
+
+    <h1>Products Page</h1>
+    <ul>
+    <% @products.each do |product| %>
+      <li>
+        <%= product.name %>
+        <%= number_to_currency(product.price) %>
+      </li>
+    <% end %>
+    </ul>
+
+// apps/controllers/products_controller.rb
+  /*/ making an action for index in the controller makes it so it is now associated with the index page you just created above and runs it
+
+16.
+    def index
+      @products = Product.all
+    end
+
+/*/ you can go to localhost:3000 to check it out
+
+// in products controller make a method for show
+
+17.
+  def show
+    @product = Product.find(params[:id])
+  end
+
+// since show is a 'get' make another file in views folder
+18. show.html.erb
+
+    <h1><%= @product.name %></h1>
+    <h3><%= number_to_currency(@product.price) %></h3>
+    <p>SKU: <%= @product.sku %></p>
+    <div>
+      <%= @product.description %>
+    </div>
+
+    <%= link_to('Back to all products', products_path) %>
+
+
+// adding a form
+  // add your action in controller.
+19.
+    def new
+      @product = Product.new
+    end
+
+// new is a 'get' so make new file in views
+20.
+  new.html.erb
+
+    <h1>Make a new product</h1>
+
+    <%= form_for(@product) do |f| %>
+      <div>
+        <%= f.label(:name) %>
+        <%= f.text_field(:name) %>
+      </div>
+      <div>
+        <%= f.submit('Save Product') %>
+      </div>
+    <% end %>
+
+// to put the inputed form data somewhere
+  // this is not a 'get' so no new file in views
+21.
+  def create
+    @product = Product.create()
+    redirect_to products_path
+  end
+
+
+
+
+
+  --- helper methods ---
+
+link_to :
+<%= link_to(product.name, product_path(product.id)) %>
+
+number_to_currency :
+  <h3><%= number_to_currency(@product.price) %></h3>
+
+to protect against HTML injection -
+  add .html_safe to safe string
+  <%= link_to('&laquo; Back to all products'.html_safe, products_path) %>
+
+form_for() :
+  creates form for you with safety features

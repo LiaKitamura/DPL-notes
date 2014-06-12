@@ -35,6 +35,8 @@
 
     ------------------------ Creating a Model -------------------------
 
+  ***// never touch the schema.rb file. But it is a good reference for what is in your tables and shows the attributes, datetypes, and modifiers //***
+
 // when creating new projects
 1. rails new sandbox -d postgresql
 

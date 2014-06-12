@@ -526,15 +526,51 @@ controller_action column : shows the actions you have
       </div>
     <% end %>
 
-// to put the inputed form data somewhere
+// to put the inputed form data into DB (but should do strong params below)
   // this is not a 'get' so no new file in views
 21.
   def create
-    @product = Product.create()
+    @product = Product.create(params[:product])
     redirect_to products_path
   end
 
+// to see what is in the params hash we could do a raise. then try to run page.
+  // and the error page shows you the hash you can access
+  def create
+      raise params.inspect  <---- raise like so
+      @product = Product.create(params[:product])
+      redirect_to products_path
+    end
 
+
+----- Using Strong parameters ------
+
+// everything below private cannot be accessed outside of its class. you can also think of the methods now as actual methods. rather then actions like above.
+
+// to have strong parameters instead you would do this :
+21.5
+
+  def create
+    @product = Product.new(product_params)   <-- changed here
+    if @product.save
+      redirect_to products_path     <-- this runs your validation. if it fails
+    else                                it doesn't save and goes straight to
+      render :new                       the else
+    end
+  end
+
+// adding your validations
+  // find app/models/product.rb and add this :
+22. validates :name, presence: true
+
+// then also add a method under private
+23. 
+
+private
+
+  def product_params
+    params.require(:product).permit(:name)  <-- this is the strong param
+  end
 
 
 

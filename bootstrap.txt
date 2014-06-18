@@ -1,0 +1,102 @@
+
+------------------------------- BOOTSTRAP --------------------------------------
+
+rails new foodie -d postgresql
+
+cd foodie/
+
+ atom .
+
+gemfile
+gem 'bootstrap-sass'
+
+bundle
+
+rails g scaffold Nom name:string delicious:boolean
+
+config/database
+host:localhost
+
+rake db:create
+rake db:migrate
+
+application.css
+rename file application.css.scss
+@import "bootstrap";
+
+to use font-awesome
+gem 'font-awesome-sass'
+bundle
+
+gem 'kaminari'
+bundle
+noms_controller in index
+@noms = Nom.all.page(params[:page]).per(5)
+
+
+to include pry in gemfile
+  group :development do
+    gem 'spring'
+    gem 'pry-rails'
+  end
+
+add binding.pry where you want to look
+
+
+Create a static home page
+Create a global navbar in your layout
+Add a link to the home page
+Add a link to the noms page
+Fix the style on the show page
+Fix the style on the edit / new pages
+
+
+
+static home page
+controller, view, routes
+
+#setting up route
+routes.rb
+root 'site#index'
+
+creates controller
+rails g controller Site index
+
+
+create a global navbar
+views/application/layout
+<div class="row">
+  <div class="col-sm-12">
+    <nav class="navbar navbar-default" role="navigation">
+       <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="<%= root_path %>">Home</a>
+            <a class="btn btn-default navbar-btn" href="<%= noms_path %>">Noms</a>
+
+
+
+
+
+models/noms.rb
+belongs_to :restaurant
+
+model/restaurant
+has_many :noms
+
+terminal
+rails g migration add_restaurant_id_to_noms restaurant_id:integer
+rake db:migrate
+
+application.html.erb
+<li><a href='<%= restaurants_path %>'>Restaurants</a></li>
+
+
+scoped resource
+routes.
+resources :restaurants do
+    resources :noms
+  end
+to do anything with noms i have to have access to restaurants
+
+
+restaurant_noms GET    /restaurants/:restaurant_id/noms(.:format)          noms#index

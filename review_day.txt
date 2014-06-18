@@ -1,0 +1,163 @@
+
+********************************************************************************
+
+------------------------------------ Review Day --------------------------------
+- using parenthesis and brackets -
+
+# define the method
+# this method takes 0 arguments
+
+def do_stuff
+  'hello'
+end
+
+# call the method
+# called with 0 arguments
+
+do_stuff
+
+# define method
+# this one requires 1 argument
+
+def do_more_stuff(stuff_to_do)
+  puts stuff_to_do
+end
+
+# called with 1 argument
+# passed 1 argument
+
+do_more_stuff('yo yo')
+
+
+.find looks for a single thing or an array
+
+array[index]
+
+hash[key]
+  EX: Post.find(params[:id])
+    params is the hash id is the key
+
+
+
+********************************************************************************
+********************************************************************************
+
+-----------------------------TABLE ASSOCIATION----------------------------------
+
+
+
+we have 2 objects a Museum <- Artifact
+
+you could say the artifact has an association with Museum. you can't have an artifact without the Museum
+
+
+# on the DB side create a migration or have it in the beginning
+
+  def change
+    add_column :artifacts, :museum_id, integer
+  end
+
+# writing the belongs_to and has_many associates on the rails side
+# by adding this line of code belongs_to :museum rails expects this model to have a museum_id column that is an integer
+
+  class Artifact < ActiveRecord::Base
+    belongs_to :museum
+  end
+
+  class Museum < ActiveRecord::Base
+    has_many :artifacts
+  end
+
+# when you call the method belongs_to you must have a column _id
+
+  EX : so the artifact is looking for a museum_id
+
+
+1. create the association - model and db
+2. how do I want to structure this. Can we create a child record (artifact) without the parent record (museum)? if NO create scope. if yes no scoped routes
+2a. Create scoped routes
+
+  MuseumApp.application.routes.draw do
+    root 'site#index'
+
+    resources :museums do
+      # requires an instance of a museum at all times to do anything with artifacts
+      resources :artifacts
+      # all routes would now look like this
+      # /museums/:museum_id/artifacts
+      end
+    end
+
+without notes looks like :
+
+2a. ----> MuseumApp.application.routes.draw do
+            root 'site#index'
+            resources :museums do
+              resources :artifacts
+            end
+          end
+
+# now you CAN'T just do @artifats = Artifact.all
+# you would do @artifacts = @museum.artifacts
+
+ArtifactsController
+before_action :find_museum
+def index
+  @artifacts = @museum.artifacts
+end
+
+private
+
+def find_museum
+  @museum = Museum.find(params[:museum_id])
+end
+
+
+gem 'journey'
+
+handles creating routes. only for rails
+
+
+
+********************************************************************************
+********************************************************************************
+
+------------------------------------
+
+to make associations there are 3 things
+
+1. routes.rb
+
+  EX:
+    resources :posts do
+        resources :comments
+      end
+
+# resources :comments is now scoped inside :posts
+
+2. make associations in models/comment.rb and also post.rb
+
+EX :
+  comment.rb :
+    belongs_to :post
+
+  post.rb :
+    has_many :commments
+
+3. add foreign key column of post_id
+
+  EX :
+    post_id: 1
+
+# now comment has a post_id column. now each comment is associated with a post_id
+
+
+At this point when you delete a post the comment stays.
+To associate the deletion along with the post
+
+in post.rb add dependent: :destroy
+
+EX :
+  class Post < ActiveRecord::Base
+    has_many :comments, dependent: :destroy  <---- added this
+  end

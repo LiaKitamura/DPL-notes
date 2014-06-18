@@ -1,0 +1,177 @@
+
+************************** Application Planning ********************************
+
+Name the app
+// makes it a real thing.
+
+what is the goal? trying to solve a problem
+// what is the purpose of the app. clear and concise idea
+
+MVP (0.1.0)
+// Minimal Viable Product. Minimal amount that makes your app something
+  // doesn't do much or look great but it works
+
+beta release - not fully open to the public
+
+MVP release (1.0.0)
+
+M.m.b (2.1.2)
+// Major version - huge change. new features
+// minor - not much change. maybe add some new features
+// bug fixes. no new features
+
+create your feature list
+// list ALL features you want your app to have.
+
+Sort the feature list to create the MVP
+// the Minimal amount your app must have
+
+Sort the remaining features to create subsequent releases
+
+set a deadline
+// estimate of how long it might take you for each feature.
+  // whatever time you think it will take you, times that by 3
+
+Plan out the MVP objects
+//what objects we are dealing with. In this case models
+  // list out aspects for that the model and attributes
+
+Figure out field types for the aspects
+//  EX : name:string, emails:string
+
+Do you need another model?
+// if you do what kind of database? relational?
+
+List out Tools
+// relational database. rails is a good option.
+// its open source
+// other tools.
+// is there going to be money involved?
+
+Planning out controllers
+Planning out flow
+// what controllers do i need
+  // What does the MVP actually look like
+    // layout each page to figure out gets and posts. url
+
+mock - also called a mockup. an image representation of what the UI might look like
+
+think of real world objects not the code
+
+TheaterExpress
+
+Desc - Find theaters and see what plays are happening at those along with times and so on.
+
+Feature list
+  search by theater area or play
+  preview or clip
+  actor info
+  coming soon
+  save plays you want to watch
+  purchase tickets
+
+MVP
+  list of plays in immediate area
+  list of theaters
+  search field
+  actor info
+  available seats diagram picture thing
+
+later
+  previews
+  coming soon section
+  saving plays
+  purchase tickets
+
+Models and attributes
+  Play model
+    belongs_to theater
+    name
+    time
+    actors
+    review
+    description
+
+  Theater model
+    has_many plays
+    name
+    location
+    directions
+    cost
+    seats available
+
+  Actor model
+    name
+    age
+    other plays
+    where they are from
+
+Tools to build it
+  relational database
+
+Discuss user flow
+  user enters app
+  search by plays in the area
+  find closest play and click it
+  read about times, actors involved, description, and short review
+  get location and cost info for theater
+
+
+class Theater < ActiveRecord::Base
+  has_many :plays
+end
+
+Clays Play < ActiveRecord::Base
+  belongs_to :theater
+end
+
+
+create_table :theaters do |t|
+
+end
+
+create_table :plays do |t|
+  // t.belongs_to :theater
+  t.integer :theater_id
+end
+
+@theater = Theater.find(1)
+
+
+@theater.plays <---returns an array
+
+
+@play = @theater.plays.build(play_params)
+@play.save
+@play.theater.id == @theater.id #=true
+
+# using a before_action
+class PlaysController < Applicationcontroller
+  before_action :find_theater
+
+  def edit
+    @plays = @theater.plays
+  end
+
+  def new
+    @play = @theater.plays.find(params[:id])
+  end
+
+  private
+  def find_theater
+    @theater = Theater.find(params[:theater_id])
+  end
+end
+
+# scope the plays controller to a theater
+resources :theaters do
+  resources :plays
+end
+
+"/theaters/1/plays/45" <---routes would look like
+
+home page should have search form (doesn't need to work)
+home page should list top theaters (not all of them)
+there should be a link to view all the theaters
+clicking on a theater should show more info about that theater and list all of the plays for that theater
+style the app. no default black text white background

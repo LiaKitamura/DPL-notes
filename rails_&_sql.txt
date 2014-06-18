@@ -125,6 +125,13 @@
 // rolls back migration and deletes all data.
     **// rake db:rollback //**
 
+// deleting all data in database //
+  **// rake db:drop //**
+// this deletes database but not actual files so you do NOT need to RECREATE //
+  **// rake db:create //**
+  **// rake db:migrate //**
+  **// rake db:seed //** if you messed up the seed also if not omit this
+
 
 
       ------------- Adding Values to your Attributes --------------
@@ -448,13 +455,30 @@ uri pattern column : inside pattern anything inside () is optional. if it is not
       products.html
   the :format is a variable
 
-controller_action column : shows the actions you have
+controller_action column : what controller this route handles to the right of # specifies the action controller takes.
 
 
-/*/ its possible to have more then one index page. this is why you also add the html part
-  EX : index.html.erb
-       index.xml.erb
-       index.pdf.erb
+
+creates seven different routes in your application, all mapping to the Photos controller:
+
+HTTP Verb  	Path	       Controller#Action	      Used for
+GET	      /photos	       photos#index	      display a list of all photos
+GET	     /photos/new	    photos#new	        return an HTML form for creating a new photo
+POST	    /photos	        photos#create	     create a new photo
+GET	    /photos/:id	     photos#show	       display a specific photo
+GET	    /photos/:id/edit	photos#edit	       return an HTML form for editing a photo
+PATCH/PUT  /photos/:id	   photos#update	      update a specific photo
+DELETE	 /photos/:id	     photos#destroy       delete a specific photo
+
+
+
+
+
+
+/*/ its possible to have more then one index page. but in its own folders
+  EX : products/index.html.erb
+       site/index.html.erb
+       index.html.erb
 
 // start the rails server
 14. rails s
@@ -481,7 +505,7 @@ controller_action column : shows the actions you have
       @products = Product.all
     end
 
-/*/ you can go to localhost:3000 to check it out
+/*/ you can go to localhost:3000/products to check it out
 
 // in products controller make a method for show
 
@@ -563,8 +587,13 @@ controller_action column : shows the actions you have
   // find app/models/product.rb and add this :
 22. validates :name, presence: true
 
+/*/ other types of validations :
+      validates :email, uniqueness: true
+      validates :password, min_length: 6
+      validates :url, format: SOME_URL_REGEX
+
 // then also add a method under private
-23. 
+23.
 
 private
 
@@ -588,3 +617,229 @@ to protect against HTML injection -
 
 form_for() :
   creates form for you with safety features
+
+pluralize:
+  <h1>Showing <%= pluralize(@products.count, 'Product') %></h1>
+
+--------------------------------------------------------------------------------
+
+index
+<%= link_to('edit', edit_product_path(product.id)) %>
+        shows ^      ^ prefix ^path
+
+
+products controller
+def edit
+  @product = Product.find(params[:id])
+end
+
+
+views/
+edit.html.erb
+
+<h1>Edit <%= @product.name %></h1>
+                  ^ this makes product dynamic
+
+<%= form_for(@product) do |f| %>
+  <div>
+    <%= f.label(:name) %>
+    <%= f.text_field(:name) %>
+  </div>
+  <div>
+    <%= f.submit('Update') %>  <-- only difference from other form
+  </div>
+<% end %>
+
+
+controller
+// this is not a gets so no new page needed. that means it either renders or puts
+// ActiveRecord models has an update_attributes
+
+  def update
+    @product = Product.find(params[:id])
+    if @product.update_attributes(product_params)
+      redirect_to products_path
+    else
+      render :edit
+    end
+  end
+
+// links can only do a get. can't do a delete. we need to do some javascript - method: :delete
+
+index
+-- <%=link_to('delete', product_path(product.id), method: :delete, confirm: 'Are you sure?') %>
+
+controller
+def destroy
+    @product = Product.find(params[:id])
+    @product.destroy
+    redirect_to products_path
+  end
+
+
+
+filters or hooks allows us to do specific things in a particular order. you can tell the controller to run code before or after an action
+  EX hook : before_action
+
+at the top of controller :
+before_action :find_product, only: [:show, :edit, :update, :destroy]
+
+under private :
+
+  def find_product
+    @product = Product.find(params[:id])
+  end
+end
+
+// you can now remove repetitive code from the show, edit, update, and destroy actions
+
+
+
+-------- making a homepage ----
+
+creating a separate controller for our homepage
+
+rails g controller site
+
+routes.rb
+root 'site#index'
+
+site_controller
+
+  def index
+
+  end
+
+views/site/
+index.html.erb
+
+
+app/views/layouts/application.html.erb
+
+  <body>
+    <div id="wrapper">
+      <header>
+        <nav>
+          <%= link_to('Home Page', root_path) %>
+          <span>&nbsp;|&nbsp;</span>
+          <%= link_to('View Products', products_path) %>
+        </nav>
+      </header>
+      <section>
+        <%= yield %>
+      </section>
+      <footer>
+        copyright &copy; <%= Time.now.year %>
+      </footer>
+    </div>
+  </body>
+
+
+add styling
+app/assets/stylesheets/application.css
+
+
+add images
+// save img in app/assets/site/index.html.erb
+<%= image_tag('mush.jpg', size: '100x100') %>
+
+background img
+also save in stylesheets
+then in
+
+body {
+background: transparent url('fresh_snow.png') repeat scroll center center ;
+}
+#main-content {
+  background-color: white;
+  padding: 20px;
+}
+
+
+products/index.html.erb
+<h1>Showing <%= pluralize(@products.count, 'Product') %></h1>
+Created <%= time_ago_in_words(product.created_at) %> ago
+
+
+
+creating your own helper
+helper/application_helper
+def show_notice_message
+  unless flash.empty?
+    [:notice, :alert].each do |key|
+      return content_tag(:div, flash[key], class: "flash-#{key}") if flash[key].present?
+      end
+    end
+  end
+
+flash = a global hash. stores values and keys
+you can store 2 different keys
+values will be actual message
+
+
+products controller
+add flash in create if statement
+if
+  flash[:notice] = 'Good Job! You did it.'
+else
+  flash[:alert] = 'Bad job! You failed.'
+
+
+// in order to use it you have to put it somewhere
+views/layouts/application.html.erb
+<%= show_notice_message %>
+
+
+
+
+------- about page --------
+
+config/routes.rb
+
+get '/about' => 'site#about'
+
+// rails has made an about path in rake routes
+
+views/layouts/application add the link
+<%= link_to('About DPL Store', about_path) %>
+
+controller/site_controller
+def about
+
+end
+
+
+making another model
+rails g model car year:integer make:string model:string
+rake db:migrate
+
+// in rails c added values to cars
+
+
+add to the site controller
+def index
+  @products = Product.all
+  @cars = Car.all
+end
+
+
+views/site/index.html
+
+<div class="left-column">
+  <h2>Our Products</h2>
+  <% @products.each do |product| %>
+    <div class="product">
+      <%= product.name %>
+    </div>
+  <% end %>
+</div>
+
+<div class="right-column">
+  <h2>Our Cars</h2>
+  <% @cars.each do |car| %>
+    <div class="car">
+      <%= car.year %> <%= car.make %> <%= car.model %>
+    </div>
+  <% end %>
+</div>
+<br clear='all'/>
